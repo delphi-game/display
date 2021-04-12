@@ -1,0 +1,59 @@
+{
+	"landing": {
+		"name": "Open Room",
+		"colors": {
+			"bg": "#E8DBB8",
+			"border": "#B29E7A"
+		},
+		"elements": [ "Links", "TutorialOrButton", "Vines" ],
+		"overrides": [ "right_align_links" ]
+	},
+	"join": {
+		"name": "Join Room",
+		"colors": {
+			"bg": "#E8DBB8",
+			"border": "#B29E7A"
+		},
+		"elements": [ "Links", "DelphiTitle", "Crystal", "Vines" ]
+	},
+	"thinking": {
+		"name": "Thinkers' Turn",
+		"colors": {
+			"bg": "#6DCBFF",
+			"border": "#B5E3FF"
+		},
+		"elements": [ "RoundTitle", "ThinkerProgress", "Scoreboard", "Clouds", "Sun" ]
+	},
+	"guessing": {
+		"name": "Guessers' Turn",
+		"colors": {
+			"bg": "#F4F4F4",
+			"border": "#CBCBCB"
+		},
+		"elements": [ "ClueList", "Grid", "ClueTitle" ]
+	},
+	"checking": {
+		"name": "Clue Checking",
+		"colors": {
+			"bg": "#FFF9BE",
+			"border": "#E6C994"
+		},
+		"elements": [ "TurnTitle", "CardPresentation", "Stars" ]
+	},
+	"end": {
+		"name": "Game Over",
+		"colors": {
+			"bg": "#FFAAA5",
+			"border": "#CE7B79"
+		},
+		"elements": [ "GameOverTitle", "WinnerList", "NextRoomCountdown", "Scoreboard", "Statue" ]
+	},
+	"restart": {
+		"name": "Play Again?",
+		"colors": {
+			"bg": "#EFD9FF",
+			"border": "#C19DED"
+		},
+		"elements": [ "Links", "PlayAgainTitle", "Medusa", "Snakes" ]
+	}
+}
