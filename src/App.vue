@@ -1,8 +1,5 @@
 <template>
-  <div
-    id="app"
-    :style="{ backgroundColor: stage.colors.bg, fontSize, opacity }"
-  >
+  <div id="app" :style="{ backgroundColor: stage.colors.bg }">
     <!-- Vertical and horizontal guide lines -->
     <!--<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="guide">
       <line x1="0" y1="50" x2="100" y2="50" stroke="red" />
@@ -17,7 +14,7 @@
     </svg>-->
 
     <!-- The "screen" div is the guaranteed area to be visible on the display -->
-    <div class="screen" ref="app">
+    <div class="screen" ref="screen">
       <transition-group name="fade" mode="out-in">
         <!-- Each element is absolutely positioned and toggled depeneding on current stage -->
         <TutorialOrButton
@@ -53,7 +50,7 @@
         <CardPresentation
           v-if="show('CardPresentation')"
           :key="uniqueId('base-element-')"
-          class="front no-transition"
+          class="front"
         />
         <ClueList
           v-if="show('ClueList')"
@@ -99,7 +96,7 @@
         <Crystal
           v-if="show('Crystal')"
           :key="uniqueId('base-element-')"
-          class="mid no-transition"
+          class="mid"
         />
         <Statue
           v-if="show('Statue')"
@@ -200,12 +197,6 @@ export default {
     ClueTitle,
     ClueList,
   },
-  data() {
-    return {
-      fontSize: "20px",
-      opacity: 0,
-    };
-  },
   beforeCreate() {
     /*
     this.$store.commit("setTeam", { id: "team-1", color: "magenta", score: 2 });
@@ -215,36 +206,73 @@ export default {
     this.$store.commit("setState", { team_id: "team-2", clue: "Purple (2)" });ÎÎ
     */
 
-    
-    setTimeout(() => {
-      this.$store.commit("setStage", "guessing");
-    }, 4000);
+    this.$store.commit("setStage", "checking");
+    this.$store.commit("setCode", "CODE");
+    this.$store.commit("resetReadiness");
+
+    /*
+    this.$store.dispatch("queueThrough", [
+      {
+        team: "red",
+        clue: { word: "Animal", player: "Joe" },
+        guess: { word: "Zoo", player: "Joe" },
+        correct: true,
+        color: "red",
+      },
+    ]);
+    */
+
+    /*
+≈≈
+    this.$store.commit("newTeam", { team: "yellow", remaining: 9 });
 
     setTimeout(() => {
-      this.$store.commit("setStage", "checking");
-    }, 8000);
-    
+      this.$store.commit("readyTeam", "yellow");
+    }, 1000);
+
+    setTimeout(() => {
+      this.$store.commit("newTeam", { team: "green", remaining: 1 });
+      this.$store.commit("setRound", 4);
+    }, 3000);
+
+    setTimeout(() => {
+      this.$store.commit("teamRemaining", { team: "green", remaining: 5 });
+      this.$store.commit("teamRemaining", { team: "yellow", remaining: 1 });
+      this.$store.commit("teamRemaining", { team: "red", remaining: 10 });
+    }, 5000);
+
+    */
+
+    this.$store.commit("player", {
+      action: "add",
+      name: "joe",
+      team: "blue",
+    });
+
+    /*
+    Object.keys(require("./assets/stages.json")).forEach((stage, index) => {
+      if (stage != "landing") {
+        setTimeout(() => {
+          this.$store.commit("setStage", stage);
+        }, 3000 * index);
+      }
+    });
+    */
 
     //this.$store.commit("setStage", "landing");
-
-    this.$store.commit("setStage", "thinking");
-
-    setTimeout(() => {
-      this.opacity = 1;
-    }, 100);
   },
   mounted() {
-    this.fontSize = this.$refs.app.offsetWidth / 50 + "px";
-    /*
-    window.addEventListener("resize", () => {
-      this.fontSize = this.$refs.app.offsetWidth / 50 + "px";
-    });
-    */
-   /*
+    this.updateFontSize();
+
+    window.onresize = () => {
+      this.updateFontSize();
+    };
+
     window.addEventListener("fullscreenchange", () => {
-      this.$store.commit("setFullscreen", !this.system.isFullscreen);
+      if (this.system.isFullscreen) {
+        this.$store.commit("setFullscreen", false);
+      }
     });
-    */
   },
   methods: {
     show(element) {
@@ -256,6 +284,10 @@ export default {
     },
     uniqueId(prefix) {
       return uniqueId(prefix);
+    },
+    updateFontSize() {
+      const font_size = this.$refs.screen.clientWidth / 50 + "px";
+      this.$store.commit("setFontSize", font_size);
     },
   },
   computed: {
@@ -293,13 +325,14 @@ body {
 #app {
   font-family: "Comic Neue", "Comic Sans", cursive;
   transition: background-color 2s ease-in-out, opacity 1s ease-in;
+  background-color: black;
 }
 
 .screen {
   width: 100vw;
-  height: 56.25vw; /* height:width ratio = 9/16 = .5625  */
+  height: 56.25vw;
   max-height: 100vh;
-  max-width: 177.78vh; /* 16/9 = 1.778 */
+  max-width: 177.78vh;
 
   margin: auto;
   position: absolute;
@@ -323,25 +356,37 @@ body {
 
 .fade-enter-active:not(.no-transition),
 .fade-leave-active:not(.no-transition) {
-  transition: transform 1s, opacity 0.5s;
-}
-.fade-enter:not(.no-transition) {
-  opacity: 0;
-  transform: translateX(-100vw)
+  transition: transform 1s, opacity 0.5s !important;
 }
 
-.fade-leave-to:not(.no-transition) /* .list-leave-active below version 2.1.8 */ {
+.fade-leave-to,
+.fade-enter {
   opacity: 0;
-  transform: translateX(100vw)
+}
+
+.fade-enter:not(.no-transition) {
+  transform: translateX(-100vw) !important;
+}
+
+.fade-leave-to:not(.no-transition) {
+  transform: translateX(100vw) !important;
 }
 
 .fade-move:not(.no-transition) {
-  transition: transform 1s;
+  transition: transform 1s !important;
 }
 
 .title-font {
   font-family: "ChunkFive", "Times New Roman", Times, serif;
   letter-spacing: 0.03em;
+}
+
+.fixed-holder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .guide {
@@ -362,5 +407,9 @@ body {
   transform: scale(2);
 
   pointer-events: none;
+}
+
+.hidden {
+  opacity: 0;
 }
 </style>
