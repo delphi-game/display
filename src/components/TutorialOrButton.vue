@@ -68,10 +68,23 @@ export default {
         this.$refs.openRoomButton.classList.remove("active");
         setTimeout(() => {
           soundManager.startMusic();
-          document.getElementById("app").requestFullscreen();
+          var docElm = document.getElementById("app");
+          if (docElm.requestFullscreen) {
+            docElm.requestFullscreen();
+            setTimeout(() => {
+              this.$store.commit("setFullscreen", true);
+            }, 800);
+          } else if (docElm.msRequestFullscreen) {
+            docElm = document.body; //overwrite the element (for IE)
+            docElm.msRequestFullscreen();
+          } else if (docElm.mozRequestFullScreen) {
+            docElm.mozRequestFullScreen();
+          } else if (docElm.webkitRequestFullScreen) {
+            docElm.webkitRequestFullScreen();
+          }
           setTimeout(() => {
             this.$store.commit("setStage", "join");
-          }, 500);
+          }, 800);
         }, 40);
       }, 100);
     },
