@@ -1,5 +1,10 @@
 <template>
-  <div class="outer" :style="{ transform: `rotate(${rotation}deg) scale(1.5) translate(-2.5%, 6%)` }">
+  <div
+    class="outer"
+    :style="{
+      transform: `rotate(${rotation}deg) scale(1.5) translate(-2.5%, 6%)`,
+    }"
+  >
     <div class="text">TEST</div>
     <svg
       viewBox="0 0 374 182"
@@ -63,7 +68,7 @@
           <g transform="matrix(0.679296,0,0,0.530734,-1001.41,-25.7823)">
             <path
               d="M2481.52,475.532C2354.92,469.341 2228.23,463.47 2096.06,475.532C2093.01,547.585 2090.35,619.327 2096.06,684.286C2224.99,694.024 2353.15,686.932 2481.52,684.286C2491.52,618.979 2485.33,546.424 2481.52,475.532Z"
-              style="fill:white;"
+              :style="{ fill: lightColor }"
             />
             <path
               d="M2484.77,475.221C2484.65,473.005 2483.3,471.265 2481.64,471.183C2443.15,468.503 2404.68,465.735 2366.02,463.726C2327.62,461.73 2289.06,460.222 2250.18,460.127C2199.3,460.003 2147.89,462.299 2095.62,467.037C2092.41,467.33 2089.87,470.766 2089.68,475.052C2088.03,517.541 2086.5,559.921 2086.74,600.868C2086.91,629.835 2087.96,658.088 2090.45,685.164C2090.77,688.8 2093,691.603 2095.74,691.811C2147.35,695.341 2198.82,696.147 2250.22,695.699C2327.41,695.025 2404.46,691.466 2481.58,689.45C2483.39,689.412 2484.95,687.694 2485.31,685.319C2489.38,658.209 2490.71,629.882 2490.56,600.951C2490.35,559.675 2487.15,517.16 2484.77,475.221ZM2478.47,479.798C2480.57,520.26 2483.33,561.212 2483.3,600.979C2483.28,627.76 2481.99,653.998 2478.34,679.17C2402.29,680.361 2326.31,683.109 2250.21,682.813C2200.6,682.62 2150.94,681.106 2101.18,677.15C2099.32,652.523 2098.64,626.964 2098.67,600.819C2098.72,562.601 2100.3,523.144 2102.1,483.524C2152.15,479.135 2201.43,477.587 2250.23,476.97C2288.99,476.48 2327.44,476.571 2365.76,477.214C2403.43,477.845 2440.95,478.748 2478.47,479.798L2478.47,479.798Z"
@@ -76,14 +81,14 @@
 </template>
 
 <script>
-import Colors from "../assets/colors.json"
+import Colors from "../assets/colors.json";
 
 export default {
   props: {
     word: String,
     discovered: Boolean,
-    color: String,
-    blinking: Boolean,
+    fillColor: String,
+    blinkColor: String,
   },
   data() {
     return {
@@ -96,15 +101,15 @@ export default {
   },
   computed: {
     solidColor() {
-      return Colors[this.color].solid
+      return Colors[this.blinkColor || "none"].solid;
     },
     lightColor() {
-      return Colors[this.color].light
-    }
+      return Colors[this.fillColor || "white"].light;
+    },
   },
   mounted() {
-    if (this.blinking) {
-      const offset = Math.round(Math.random() * 500)
+    if (this.blinkColor) {
+      const offset = Math.round(Math.random() * 500);
       this.showBlink.a = true;
       setInterval(() => {
         this.showBlink.b = true;
@@ -115,7 +120,7 @@ export default {
           this.showBlink.a = true;
           this.showBlink.b = false;
         }, 1000 + offset);
-      }, 500 + (offset / 2));
+      }, 500 + offset / 2);
     }
   },
 };
@@ -140,5 +145,7 @@ svg {
   display: flex;
   justify-content: center;
   align-items: center;
+
+  text-shadow: 0em 0.1em 0.3em rgba(219, 219, 219, 0.5);
 }
 </style>
