@@ -1,10 +1,19 @@
 <template>
-  <div class="grid" :style="{ ...gridCss  }">
-    <Card v-for="(card, id) in cards" :key="id" :word="card.word" :id="id" :blinking="true" color="blue" />
+  <div class="grid" :style="{ ...gridCss, fontSize: system.font_size }">
+    <Card
+      v-for="(card, id) in cards"
+      :key="id"
+      :word="card.word"
+      :id="id"
+      :blink-color="'red'"
+      fill-color="blue"
+    />
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 import Card from "./Card.vue";
 
 export default {
@@ -44,11 +53,12 @@ export default {
   },
   computed: {
     gridCss() {
-      const gridCss = {}
-      gridCss["grid-template-rows"] = "1fr ".repeat(5).trim()
-      gridCss["grid-template-columns"] = "1fr ".repeat(5).trim()
-      return gridCss
-    }
+      const gridCss = {};
+      gridCss["grid-template-rows"] = "1fr ".repeat(5).trim();
+      gridCss["grid-template-columns"] = "1fr ".repeat(5).trim();
+      return gridCss;
+    },
+    ...mapState(["system"]),
   },
 };
 </script>
@@ -57,7 +67,7 @@ export default {
 .grid {
   position: absolute;
   top: 17%;
-  right: 10%;
+  right: 9.5%;
   width: 64%;
   height: 67%;
   display: grid;
