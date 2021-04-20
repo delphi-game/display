@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="fixed-holder">
     <svg
       class="topright"
       viewBox="0 0 1920 1080"

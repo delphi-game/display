@@ -35,9 +35,17 @@
 <script></script>
 
 <style scoped>
+div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
 svg {
   position: absolute;
-  animation: shake 15s cubic-bezier(0.5, 0, 0.5, 1) infinite alternate;
+  animation: shake 15s 5s cubic-bezier(0.5, 0, 0.5, 1) infinite alternate;
   z-index: 10;
 }
 @keyframes shake {
