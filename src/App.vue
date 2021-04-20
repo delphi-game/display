@@ -206,9 +206,9 @@ export default {
     this.$store.commit("setState", { team_id: "team-2", clue: "Purple (2)" });ÎÎ
     */
 
-    this.$store.commit("setStage", "checking");
-    this.$store.commit("setCode", "CODE");
-    this.$store.commit("resetReadiness");
+    this.$store.commit("setStage", "landing");
+    //this.$store.commit("setCode", "CODE");
+    //this.$store.commit("resetReadiness");
 
     /*
     this.$store.dispatch("queueThrough", [
