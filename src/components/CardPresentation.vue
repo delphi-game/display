@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="fixed-holder" :class="{ hidden: !checking.shown }">
     <div class="container">
       <div class="left">
         <svg
@@ -31,7 +31,7 @@
                   cx="6205.49"
                   cy="6829.53"
                   r="89.018"
-                  style="fill:rgb(0,27,252);"
+                  :style="{ fill: color(checking.presenting.team, 'dark') }"
                 />
                 <path
                   d="M6205.49,6740.51C6254.62,6740.51 6294.51,6780.4 6294.51,6829.53C6294.51,6878.66 6254.62,6918.55 6205.49,6918.55C6156.36,6918.55 6116.47,6878.66 6116.47,6829.53C6116.47,6780.4 6156.36,6740.51 6205.49,6740.51ZM6205.49,6751.05C6227.45,6750.39 6247.7,6758.51 6262.45,6772.57C6277.51,6786.91 6286.94,6807.11 6287.35,6829.53C6286.84,6851.91 6277.28,6871.97 6262.25,6886.29C6247.52,6900.31 6227.4,6908.55 6205.49,6907.98C6197.03,6907.98 6188.91,6906.55 6181.25,6904.15C6169.23,6900.38 6158.29,6894.14 6149.39,6885.63C6134.56,6871.44 6125.06,6851.65 6124.55,6829.53C6124.82,6807.31 6134.04,6787.23 6148.87,6772.91C6163.48,6758.81 6183.61,6750.55 6205.49,6751.05Z"
@@ -54,7 +54,13 @@
           </g>
         </svg>
       </div>
-      <div class="right">
+      <div
+        class="right"
+        :class="{
+          wobble: checking.checked && !checking.presenting.correct,
+          bounce: checking.checked && checking.presenting.correct,
+        }"
+      >
         <svg
           viewBox="0 0 691 480"
           version="1.1"
@@ -72,7 +78,7 @@
                 >
                   <path
                     d="M2481.52,475.532C2354.92,469.341 2228.23,463.47 2096.06,475.532C2093.01,547.585 2090.35,619.327 2096.06,684.286C2224.99,694.024 2353.15,686.932 2481.52,684.286C2491.52,618.979 2485.33,546.424 2481.52,475.532Z"
-                    style="fill:rgb(255,177,168);"
+                    :style="{ fill: guessColor }"
                   />
                   <path
                     d="M2481.74,467.92C2484.78,468.068 2487.25,471.126 2487.45,475.009C2489.49,517.02 2492.33,559.616 2492.21,600.932C2492.13,629.953 2490.6,658.349 2486.32,685.489C2485.87,688.389 2483.9,690.495 2481.6,690.543C2445.62,691.142 2409.65,691.869 2373.68,692.92C2319.69,694.497 2265.7,696.589 2211.61,696.261C2173.03,696.028 2134.4,694.682 2095.71,691.912C2092.81,691.693 2090.45,688.835 2090.13,685.141C2087.89,658.049 2087.06,629.806 2087.17,600.86C2087.31,559.944 2089.28,517.63 2091.35,475.205C2091.48,472.168 2093.35,469.727 2095.72,469.511C2134.78,466.236 2173.34,464.763 2211.56,463.907C2237.45,463.328 2263.18,462.991 2288.8,463.061C2353.6,463.237 2417.68,465.457 2481.74,467.92ZM2475.99,482.832C2401.17,478.422 2326.29,473.872 2250.22,473.876C2224.7,473.877 2199.05,474.433 2173.23,475.685C2149.17,476.852 2124.97,478.736 2100.58,481.136C2099.15,521.57 2097.93,561.849 2098.24,600.818C2098.46,626.934 2099.36,652.456 2101.43,677.031C2120.25,678.39 2139.07,679.344 2157.87,680.145C2188.68,681.457 2219.45,682.248 2250.2,682.419C2296.47,682.675 2342.69,682.114 2388.9,680.891C2418.41,680.11 2447.91,678.932 2477.42,678.135C2480.78,653.253 2481.84,627.368 2481.65,600.969C2481.37,562.177 2478.39,522.294 2475.99,482.832Z"
@@ -83,7 +89,7 @@
                     cx="6205.49"
                     cy="6829.53"
                     r="89.018"
-                    style="fill:rgb(0,182,255);"
+                    :style="{ fill: color(checking.presenting.team, 'light') }"
                   />
                   <path
                     d="M6205.49,6740.51C6254.62,6740.51 6294.51,6780.4 6294.51,6829.53C6294.51,6878.66 6254.62,6918.55 6205.49,6918.55C6156.36,6918.55 6116.47,6878.66 6116.47,6829.53C6116.47,6780.4 6156.36,6740.51 6205.49,6740.51ZM6205.49,6747.22C6227.93,6747.89 6247.87,6757.72 6262.19,6772.83C6269.35,6780.38 6274.93,6789.34 6278.86,6799.15C6282.63,6808.55 6284.86,6818.78 6284.84,6829.53C6285.21,6851.59 6276.66,6871.76 6262.41,6886.45C6247.97,6901.32 6227.83,6910.64 6205.49,6910.93C6183.22,6910.47 6163.27,6900.96 6148.96,6886.06C6134.91,6871.42 6126.52,6851.4 6126.96,6829.53C6126.49,6807.64 6134.93,6787.68 6148.9,6772.94C6163.2,6757.83 6183.07,6747.94 6205.49,6747.22Z"
@@ -106,19 +112,34 @@
         </svg>
       </div>
     </div>
-    <div class="floating-text card-content left-card">
-      TEST
-    </div>
-    <div class="floating-text card-content right-card">
-      TEST
-    </div>
-    <div class="floating-text user-bubble left-bubble">
-      TEST
-    </div>
-    <div class="floating-text user-bubble right-bubble">
-      TEST
+    <div :style="{ fontSize: system.font_size }">
+      <div class="floating-text card-content left-card">
+        <div>{{ getWord("clue", "word") }}</div>
+      </div>
+      <div
+        class="floating-text card-content right-card"
+        :class="{
+          wobble: checking.checked && !checking.presenting.correct,
+          bounce: checking.checked && checking.presenting.correct,
+        }"
+      >
+        <div>{{ getWord("guess", "word") }}</div>
+      </div>
+      <div class="floating-text user-bubble left-bubble">
+        <div>{{ getWord("clue", "player") }}</div>
+      </div>
+      <div
+        class="floating-text user-bubble right-bubble"
+        :class="{
+          wobble: checking.checked && !checking.presenting.correct,
+          bounce: checking.checked && checking.presenting.correct,
+        }"
+      >
+        <div>{{ getWord("guess", "player") }}</div>
+      </div>
     </div>
     <svg
+      v-if="showMark('check')"
       class="mark"
       viewBox="0 0 153 195"
       version="1.1"
@@ -143,6 +164,7 @@
       </g>
     </svg>
     <svg
+      v-if="showMark('cross')"
       class="mark cross"
       viewBox="0 0 144 142"
       version="1.1"
@@ -170,12 +192,55 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
+import Colors from "../assets/colors.json";
+
 export default {
-  props: {},
-  data() {
-    return {};
+  methods: {
+    getWord(clueORcard, wordORplayer) {
+      if (
+        this.checking.presenting[clueORcard] &&
+        this.checking.presenting[clueORcard][wordORplayer]
+      ) {
+        return this.checking.presenting[clueORcard][wordORplayer];
+      } else {
+        return "";
+      }
+    },
+    showMark(type) {
+      if (this.checking.checked) {
+        if (type == "check" && this.checking.presenting.correct == true) {
+          return true;
+        }
+        if (type == "cross" && this.checking.presenting.correct == false) {
+          return true;
+        }
+      } else {
+        return false;
+      }
+    },
+    color(color, lightness) {
+      if (Colors[color] && Colors[color][lightness]) {
+        return Colors[color][lightness];
+      } else {
+        return "rgba(0,0,0,0)";
+      }
+    },
   },
-  computed: {},
+  computed: {
+    ...mapState(["system", "checking"]),
+    presentingIteration() {
+      return this.checking.iteration;
+    },
+    guessColor() {
+      if (this.checking.checked) {
+        return Colors[this.checking.presenting.color].faint;
+      } else {
+        return "rgb(233,233,233)";
+      }
+    },
+  },
 };
 </script>
 
@@ -184,9 +249,7 @@ export default {
   position: absolute;
   width: 80%;
   height: 50%;
-  left: 0;
-  right: 0;
-  margin: auto;
+  left: 10%;
   top: 35%;
   display: flex;
   justify-content: space-between;
@@ -226,11 +289,17 @@ svg {
 
 .left-card {
   left: 14%;
+}
+
+.left-card > div {
   transform: rotate(-6deg);
 }
 
 .right-card {
   right: 14%;
+}
+
+.right-card > div {
   transform: rotate(6deg);
 }
 
@@ -255,9 +324,65 @@ svg {
   top: 54%;
   left: 51%;
   width: 8%;
+  animation: fall-in 0.3s ease 1;
+}
+@keyframes fall-in {
+  0% {
+    transform: translateY(-70%);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0);
+  }
 }
 
 .cross {
   margin-top: 2%;
+}
+
+.fixed-holder {
+  transition: opacity 0.5s ease-in-out;
+}
+
+.wobble {
+  animation: wobble 1s ease 1;
+}
+@keyframes wobble {
+  5%,
+  20% {
+    transform: translateX(3vw);
+  }
+  10%,
+  30% {
+    transform: translateX(-3vw);
+  }
+  40%,
+  60% {
+    transform: translateX(2vw);
+  }
+  50%,
+  70% {
+    transform: translateX(-2vw);
+  }
+}
+
+.bounce {
+  animation: bounce 1s ease 1;
+}
+@keyframes bounce {
+  10%,
+  40% {
+    transform: translateY(-3vh);
+  }
+  20%,
+  60% {
+    transform: translateY(2vh);
+  }
+  80% {
+    transform: translateY(-1vh);
+  }
 }
 </style>

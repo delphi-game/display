@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="fixed-holder">
     <svg
       width="100%"
       height="100%"
@@ -59,6 +59,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import Colors from "../assets/colors.json";
 
 export default {
@@ -131,25 +132,49 @@ export default {
 
           ctx.roundRect(finalPos.x, finalPos.y - 15, 80, 30, 30).fill();
 
-          ctx.font = "18px Comic Sans MS";
+          const font_size = point.name.length * -1 + 25;
+
+          ctx.font = `${font_size}px Comic Sans MS`;
           ctx.fillStyle = "black";
           ctx.textAlign = "center";
-          ctx.fillText(point.name, finalPos.x + 40, finalPos.y + 7);
+          ctx.fillText(
+            point.name,
+            finalPos.x + 40,
+            finalPos.y + 7 - (font_size * -0.5 + 9)
+          );
         });
         window.requestAnimationFrame(this.animate);
       }
     },
   },
   mounted() {
-    this.createPoint("Green", "green");
-    this.createPoint("Blue", "blue");
-    this.createPoint("Red", "red");
-    this.createPoint("Pink", "pink");
-    this.createPoint("Purple", "purple");
-    this.createPoint("Yellow", "yellow");
-    this.createPoint("Orange", "orange");
-    this.createPoint("Aqua", "aqua");
     window.requestAnimationFrame(this.animate);
+    this.players.forEach((player) => {
+      this.createPoint(player.name, player.team);
+    });
+  },
+  computed: {
+    ...mapState(["players"]),
+  },
+  watch: {
+    players(newPlayers) {
+      const newNames = newPlayers.map((x) => x.name);
+      const oldNames = this.points.map((x) => x.name);
+
+      const confirmedNewPlayers = newNames.filter((x) => !oldNames.includes(x));
+      const confirmedOldPlayers = oldNames.filter((x) => !newNames.includes(x));
+
+      confirmedNewPlayers.forEach((element) => {
+        const index = newPlayers.findIndex((player) => player.name == element);
+        const player = newPlayers[index];
+        this.createPoint(player.name, player.team);
+      });
+
+      confirmedOldPlayers.forEach((element) => {
+        const index = this.points.findIndex((player) => player.name == element);
+        this.points.splice(index, 1);
+      });
+    },
   },
 };
 
