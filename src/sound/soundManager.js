@@ -2,7 +2,7 @@ import {Howl, Howler} from 'howler';
 Howler.volume(0.8);
 
 const music = new Howl({
-	src: [process.env.BASE_URL + 'audio/music.aac'],
+	src: [process.env.BASE_URL + 'audio/compressed_music_v3.m4a'],
 	html5: true,
 	loop: true,
 	preload: true,
