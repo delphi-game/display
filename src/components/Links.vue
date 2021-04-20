@@ -97,7 +97,7 @@ export default {
       return "https://venashial.games/delphi/remote/?join=" + this.code;
     },
     url: function() {
-      if (this.stage.name == "New Room") {
+      if (this.stage.name == "Open Room") {
         return "new.dphi.ml";
       } else {
         return "dphi.ml";
