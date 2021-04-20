@@ -1,5 +1,5 @@
 <template>
-  <div class="title-font">Round {{ round }}</div>
+  <div :style="{ fontSize: system.font_size }"><span class="title-font" >Round {{ round }}</span></div>
 </template>
 
 <script>
@@ -7,7 +7,7 @@ import { mapState } from "vuex";
 
 export default {
     computed: {
-        ...mapState(["round"])
+        ...mapState(["round", "system"])
     }
 }
 </script>
@@ -18,6 +18,9 @@ div {
   top: 25%;
   left: 30%;
   font-weight: bold;
+}
+
+span {
   font-size: 300%;
 }
 </style>

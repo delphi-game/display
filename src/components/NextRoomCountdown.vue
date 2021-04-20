@@ -1,8 +1,10 @@
 <template>
-  <div>Creating new room in... {{ countdown }}</div>
+  <div :style="{ fontSize: system.font_size }"><span>Creating new room in... {{ countdown }}</span></div>
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   data() {
     return {
@@ -16,6 +18,9 @@ export default {
       }
     }, 1000);
   },
+  computed: {
+    ...mapState(["system"])
+  }
 };
 </script>
 
@@ -25,6 +30,9 @@ div {
   bottom: 1%;
   right: 1.2%;
   font-weight: bold;
+}
+
+span {
   font-size: 110%;
 }
 </style>

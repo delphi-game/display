@@ -1,12 +1,13 @@
 <template>
-  <div class="container">
+  <div class="container" :style="{ fontSize: system.font_size }">
     <div class="title">Waiting for thinkers to submit clues...</div>
     <div class="clouds">
       <svg
-        v-for="i in 9"
-        :key="i"
-        :style="{ fill: 'red' }"
-        :class="{ done: i > 5 }"
+        v-for="team, name in teams"
+        :key="name"
+        :style="{ fill: teamColor(name) }"
+        :class="{ done: team.ready }"
+        :title="team.ready + '' + name"
         viewBox="0 0 100 58"
         version="1.1"
         xmlns="http://www.w3.org/2000/svg"
@@ -34,15 +35,20 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+import Colors from "../assets/colors.json"
+
 export default {
-  props: {},
   data() {
     return {};
   },
+  methods: {
+    teamColor(name) {
+      return Colors[name].light
+    }
+  },
   computed: {
-    teams() {
-      return this.$store.state.teams;
-    },
+    ...mapState(["teams", "system"]),
   },
 };
 </script>
@@ -77,7 +83,7 @@ export default {
   width: 2.5em;
   margin: 0 0.1em;
   animation: shake 1.5s linear infinite alternate;
-  transition: transform 2s ease-in-out;
+  transition: transform 2s ease-in-out, filter 2s ease-in-out,;
 }
 
 @keyframes shake {
@@ -90,8 +96,8 @@ export default {
 }
 
 .clouds > svg.done {
-  transform: translateY(2.2em);
-  filter: grayscale(0.8);
+  transform: translateY(2.2em) !important;
+  filter: grayscale(0.6) brightness(0.6);
   animation: none;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <div class="title">Team <b>GREEN</b> Won!</div>
+  <div class="container" :style="{ fontSize: system.font_size }">
+    <div class="title">Team <b> {{ winners.name.toUpperCase() }} </b> Won!</div>
     <svg
       viewBox="0 0 384 9"
       version="1.1"
@@ -20,11 +20,30 @@
         </g>
       </g>
     </svg>
-    <div class="body">Tim<br />Brady<br />Grey<br />Tom</div>
+    <div class="body" v-html="winningPlayers"></div>
   </div>
 </template>
 
-<script></script>
+<script>
+import { mapState } from "vuex";
+
+export default {
+ computed: {
+   winningPlayers() {
+     let players = ""
+     this.winners.players.forEach((player, index) => {
+       if (index != this.winners.players.length - 1) {
+         players = players + player + '<br />'
+       } else {
+         players = players + player
+       }
+     })
+     return players
+   },
+   ...mapState(["winners", "system"]),
+ }
+}
+</script>
 
 <style scoped>
 div.container {
