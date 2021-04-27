@@ -11,8 +11,9 @@ import Stages from "./assets/stages.json";
 
 const store = new Vuex.Store({
   state: {
+    opened: false,
     stage: {},
-    code: '',
+    code: 'CODE',
     round: 1,
     teams: {
       "red": {
@@ -98,6 +99,9 @@ const store = new Vuex.Store({
     },
     toggleChecked(state) {
       state.checking.checked = !state.checking.checked
+    },
+    openRoom(state) {
+      state.opened = true
     },
   },
   actions: {

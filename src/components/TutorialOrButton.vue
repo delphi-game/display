@@ -1,12 +1,12 @@
 <template>
-  <div class="container">
-    <div v-if="false">
+  <div class="container" :style="{ fontSize: system.font_size }">
+    <div v-if="!opened">
       <h1>Welcome to Delphi!</h1>
       <p>
         This is the <b>display</b> screen that everyone playing needs to see.
         Each player will also need a <b>remote</b> device. First, the host needs
         to follow the instructions on the right using their device to open the
-        room.
+        room. <a href="https://delphi-game.github.io/wiki/">Click here for extra info ➜</a>
       </p>
     </div>
     <button v-else tabindex="0" @click="openRoom" ref="openRoomButton">
@@ -59,7 +59,7 @@ import soundManager from "../sound/soundManager";
 
 export default {
   computed: {
-    ...mapState(["round"]),
+    ...mapState(["round", "opened", "system"]),
   },
   methods: {
     openRoom() {
@@ -99,7 +99,7 @@ div.container {
   bottom: 0;
   margin: 0 auto;
   left: 15%;
-  width: 30%;
+  width: 32%;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -113,16 +113,16 @@ p {
 
 h1 {
   font-size: 140%;
-  margin-bottom: 4%;
+  margin-bottom: 3%;
   font-weight: bold;
 }
 
 p {
-  font-size: 80%;
+  font-size: 76%;
 }
 
 button {
-  padding: 0;
+  padding-right: 1.3rem;
   margin: 0;
   border: 0;
   background: none;
@@ -143,5 +143,16 @@ button.active,
 button:active {
   transform: scale(0.95);
   filter: brightness(0.9);
+}
+
+a, a:visited {
+  color: rgb(0, 104, 40);
+  border-bottom: 0.15rem dotted rgb(0, 104, 40);
+  text-decoration: none;
+}
+
+a:hover {
+  border-bottom: 0.15rem solid rgb(0, 104, 40);
+  text-decoration: none;
 }
 </style>

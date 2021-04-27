@@ -207,6 +207,11 @@ export default {
     */
 
     this.$store.commit("setStage", "landing");
+
+    setTimeout(() => {
+      this.$store.commit("openRoom", "");
+    }, 5000);
+
     //this.$store.commit("setCode", "CODE");
     //this.$store.commit("resetReadiness");
 
