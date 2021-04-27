@@ -205,12 +205,21 @@ export default {
     //this.$store.commit('setTeam', { id: 'team-4', color: 'blue', score: 0 })
     this.$store.commit("setState", { team_id: "team-2", clue: "Purple (2)" });ÎÎ
     */
+    if (process.env.NODE_ENV == "production") {
+      this.$store.commit("setStage", "landing");
 
-    this.$store.commit("setStage", "landing");
+      setTimeout(() => {
+        this.$store.commit("openRoom", "");
+      }, 5000);
+    } else {
+      this.$store.commit("setStage", "join");
+    }
 
-    setTimeout(() => {
-      this.$store.commit("openRoom", "");
-    }, 5000);
+    this.$store.commit("player", {
+      action: "add",
+      name: "Player",
+      team: "green",
+    });
 
     //this.$store.commit("setCode", "CODE");
     //this.$store.commit("resetReadiness");
@@ -247,12 +256,6 @@ export default {
     }, 5000);
 
     */
-
-    this.$store.commit("player", {
-      action: "add",
-      name: "joe",
-      team: "blue",
-    });
 
     /*
     Object.keys(require("./assets/stages.json")).forEach((stage, index) => {
@@ -308,6 +311,12 @@ export default {
   font-family: "ChunkFive";
   font-style: normal;
   src: url("./assets/fonts/Chunk.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "EMcomic";
+  font-style: normal;
+  src: url("./assets/fonts/EMcomic.woff2") format("woff2");
 }
 
 html,

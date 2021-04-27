@@ -132,15 +132,16 @@ export default {
 
           ctx.roundRect(finalPos.x, finalPos.y - 15, 80, 30, 30).fill();
 
-          const font_size = point.name.length * -1 + 25;
+          const font_size = point.name.length * -1 + 22;
+          console.log(font_size)
 
-          ctx.font = `${font_size}px Comic Sans MS`;
+          ctx.font = `${font_size}px EMcomic`;
           ctx.fillStyle = "black";
           ctx.textAlign = "center";
           ctx.fillText(
             point.name,
             finalPos.x + 40,
-            finalPos.y + 7 - (font_size * -0.5 + 9)
+            finalPos.y + 5 - (font_size * -0.65 + 10)
           );
         });
         window.requestAnimationFrame(this.animate);
