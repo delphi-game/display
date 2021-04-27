@@ -5,7 +5,6 @@ const music = new Howl({
 	src: [process.env.BASE_URL + 'audio/compressed_music_v3.m4a'],
 	html5: true,
 	loop: true,
-	preload: true,
 	volume: 0,
 	onloaderror: function(id, err) {
 		console.log(err)

@@ -133,7 +133,6 @@ export default {
           ctx.roundRect(finalPos.x, finalPos.y - 15, 80, 30, 30).fill();
 
           const font_size = point.name.length * -1 + 22;
-          console.log(font_size)
 
           ctx.font = `${font_size}px EMcomic`;
           ctx.fillStyle = "black";

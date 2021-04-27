@@ -212,7 +212,8 @@ export default {
         this.$store.commit("openRoom", "");
       }, 5000);
     } else {
-      this.$store.commit("setStage", "join");
+      this.$store.commit("setStage", "landing");
+      this.$store.commit("openRoom", "");
     }
 
     this.$store.commit("player", {
