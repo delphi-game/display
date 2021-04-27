@@ -83,7 +83,7 @@ export default {
 </script>
 
 <style scoped>
-svg {
+button {
   position: absolute;
   bottom: 2%;
   left: 2%;
@@ -93,6 +93,9 @@ svg {
   z-index: 50;
 
   cursor: pointer;
+
+  background-color: transparent;
+  border:none;
 }
 
 svg:hover,
