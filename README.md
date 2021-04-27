@@ -1,24 +1,20 @@
-# ui
+[![Netlify Status](https://api.netlify.com/api/v1/badges/dde8e12c-39dc-4e24-b0bd-ce015651f6a4/deploy-status)](https://app.netlify.com/sites/delphi-display/deploys)
+# Delphi Display
+This is the main display that everyone in a game watches.
 
-## Project setup
+## Goals
+- Support for most browsers, especially smart TVs
+- 16:9 oriented UI
+- Instant loading
+
+## Develop
+
+1. Install dependencies
 ```
 yarn install
 ```
 
-### Compiles and hot-reloads for development
+2. Serve local version
 ```
 yarn serve
 ```
-
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
